@@ -7,6 +7,7 @@
 
 using namespace std;
 
+
 int hash3(string k){
     int h = 0;
   for (int i = 0; i < k.length(); i++)
@@ -17,15 +18,24 @@ int hash3(string k){
 
 int main()
 {
+    int n_reads;
+    cin >> n_reads;
+    
 
- HashAbierto<string, string> *mihash = new HashAbierto <string,string>(10,hash3);
+ //HashAbierto<string, string> *mihash = new HashAbierto <string,string>(10,hash3);
+ //mihash->insert("pepe@pepe","pepe@pepe");
+//mihash->insert("pepe@pepe","pepe@pepe");
+//mihash->insert("pepe@pepe1","pepe@pepe1");
+//cout << mihash->unicos();
 
- //HashAbierto <string,int> *mihash = new HashAbierto <string,int>(10,hash3);
-mihash->insert("pepe@pepe","pepe@pepe");
-mihash->insert("pepe@pepe","pepe@pepe");
-mihash->insert("pepe@pepe1","pepe@pepe1");
-cout << mihash->unicos();
+HashAbierto<string, string> *mihash = new HashAbierto <string,string>(n_reads,hash3);
+for (int i = 0; i < n_reads; i++)
+    {
+        string mail;
+        cin >> mail;
+        mihash->insert(mail,mail);
+    } 
 
- // cout << mihash->buscar("pepe1") << endl;
-    return 0;
+   cout << "unicoss " << mihash->unicos();
+   return 0;
 }

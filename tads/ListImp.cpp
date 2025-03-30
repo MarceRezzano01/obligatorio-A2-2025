@@ -109,6 +109,22 @@ public:
         }
     }
 
+     bool existe(T element)
+    {
+        bool encontre = false;
+        Node *current = head;
+        while (current != NULL)
+        {
+            // note: that the elment should implement == operator
+            if (current->element == element)
+            {
+                return true;
+            }
+            current = current->next;
+        }
+        return encontre;
+    }
+
     void removeAt(int index)
     {
         assert(index >= 0 && index < size);

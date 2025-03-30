@@ -34,6 +34,7 @@ private:
     int n;                          // cant elementos
     int b;                          // tamaño de la tabla o cant buckets
     int (*hash)(k);                 // funcion de hash
+    int repetidos;
     
     float factorDeCarga()
     {
@@ -44,7 +45,6 @@ public:
     HashAbierto(int _b, int (*unhasg)(k))
     {
         table = new ListImp<keyValue<k, v> >[_b];
-        // table = new List<keyValue<k, v> >*[_b]();
         b = _b;
         n = 0;
         hash = unhasg;
@@ -52,30 +52,17 @@ public:
 
     void insert(k key, v value)
     {
-        if (factorDeCarga() > 0.7)
-        {
-            // hago rehash
-        }
         int pos = abs(this->hash(key)) % this->b;
+       
+       if(table[pos].existe(keyValue<k, v>(key, value))){
+         repetidos++;
+       }else{
         table[pos].insert(keyValue<k, v>(key, value));
-      /*  if (table[pos] == nullptr)
-        {
-            table[pos].insert(keyValue<k, v>(key, value));
-            cout << "Inserte " << key << endl;
-            n++;
-        }*/
+       }
+
     };
 
     int unicos (){
-        int mails_unicos = 0;
-        for (int i = 0; i < b; i++)
-        {
-            ListImp<keyValue<k, v> > &bucket = table[i];
-            if (bucket.getSize() == 1){
-            mails_unicos++;
-        }   
-        }
-        return mails_unicos;
-        
+        return b- repetidos;        
     };
 };
