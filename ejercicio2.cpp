@@ -16,14 +16,16 @@ int hash3(string k){
 
 }
 
-int secondaryHashString(string key, int buckets) {
+int secondaryHashString(string key) {
     int hash = 0;
     for (char c : key) {
-        hash = (hash * 17 + c) % 1000;
+        hash = (hash * 17 + c);
     }
     return 7 - (hash % 7);
 }
 
+
+//TODO: BORRAR SI TODO SIGUE OK
 int sencondHash(string palabra, int buckets)
 {
     int pos = 0;
@@ -45,7 +47,7 @@ int main()
     int n_reads;
     int m_exist;
     cin >> n_reads;
-    HashCerrado<string,string> *mihash = new HashCerrado<string,string>(n_reads,hash3,secondaryHashString);
+    HashCerrado<string,string> *mihash = new HashCerrado<string,string>(n_reads * 2,hash3,secondaryHashString);
 
 
   for (int i = 0; i < n_reads; i++)
@@ -54,7 +56,7 @@ int main()
         cin >> palabraInsert;
         mihash->insert(palabraInsert,palabraInsert);
     } 
-/*
+
      cin >> m_exist;
 
      for (int i = 0; i < m_exist; i++)
@@ -65,8 +67,7 @@ int main()
     } 
 
 
-   //cout << "unicoss " << mihash->unicos();
-*/
+  
 
 /*    
 HashCerrado<string,int> *mihash = new HashCerrado<string,int>(3,hash3,sencondHash);

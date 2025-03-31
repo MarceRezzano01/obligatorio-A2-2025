@@ -20,14 +20,14 @@ class HashCerrado{
         int n;//cant elementos
         int b;//tamaño de la tabla o cant buckets
         int (*hash)(k); //funcion de hash
-        int (*SecondHash)(k,int);
+        int (*SecondHash)(k);
 
          float factorDeCarga() {
             return (float)this->n/this->b;
         }
 
   public:
-        HashCerrado(int _b,int (*unhasg)(k),int (*secHash)(k,int)){
+        HashCerrado(int _b,int (*unhasg)(k),int (*secHash)(k)){
             table = new keyValue<k,v>*[_b]();
             for(int i=0; i < _b; i++) {
                 table[i] = nullptr;
@@ -40,7 +40,7 @@ class HashCerrado{
 
 
         /// Doble hashing: intento i =(H(k)+h2(k)x i) % _b
-// h(x) fun hash y h2(x) otra funcion de hash
+// h(k) fun hash y h2(k) otra funcion de hash
 
          void insert(k key, v value){    
             int pos = abs(this->hash(key))%this->b;
@@ -50,7 +50,7 @@ class HashCerrado{
                 if(table[pos]==nullptr){  
                     table[pos]=new keyValue<k,v>(key,value);
                     insert=true;
-                    cout<< "Inserte "<< key<< endl;
+                  //  cout<< "Inserte "<< key<< endl;
                     n++;
                 }else if(table[pos]->key == key){
                 table[pos]->value=value;
@@ -58,10 +58,10 @@ class HashCerrado{
                 }
              if (!insert) {
                intentos++; 
-               int hagoSecH = abs(this->SecondHash(key, this->b)%this->b);
-               cout << "SegHas " << hagoSecH << endl;
+               int hagoSecH = abs(this->SecondHash(key)%this->b);
+               //cout << "SegHas " << hagoSecH << endl;
                pos = (pos + (hagoSecH * intentos))%this->b;
-               cout << "PROXIMA POS A INSERT " << pos << endl;
+               //cout << "PROXIMA POS A INSERT " << pos << endl;
             }
             }
          };
@@ -77,8 +77,8 @@ class HashCerrado{
                  return 1;
              }
              index++;
-             pos=(pos+ (this->SecondHash(key,this->b))*index)%this->b;
-            
+             int hagoSecH = abs(this->SecondHash(key)%this->b);
+             pos = (pos + (hagoSecH * index))%this->b;
          }
          return 0;
         }           
