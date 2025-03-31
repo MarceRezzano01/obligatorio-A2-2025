@@ -11,8 +11,6 @@ struct keyValue{//estructura de la tabla
     }
 };
 
-
-
 template <typename k, typename v>
 class HashCerrado{
   private:
@@ -50,7 +48,6 @@ class HashCerrado{
                 if(table[pos]==nullptr){  
                     table[pos]=new keyValue<k,v>(key,value);
                     insert=true;
-                  //  cout<< "Inserte "<< key<< endl;
                     n++;
                 }else if(table[pos]->key == key){
                 table[pos]->value=value;

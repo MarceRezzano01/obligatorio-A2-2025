@@ -25,23 +25,6 @@ int secondaryHashString(string key) {
 }
 
 
-//TODO: BORRAR SI TODO SIGUE OK
-int sencondHash(string palabra, int buckets)
-{
-    int pos = 0;
-    for (int i = 0; i <= 20; i++)
-    {
-        if (palabra[i] != '\0')
-        {
-            pos += palabra[i] * 32 ^ i;
-        }
-        else
-            return pos % buckets;
-    }
-    return pos % buckets;
-}
-
-
 int main()
 {
     int n_reads;
@@ -65,20 +48,6 @@ int main()
         cin >> palabraSearch;
         cout << mihash->existe(palabraSearch) <<endl;
     } 
-
-
-  
-
-/*    
-HashCerrado<string,int> *mihash = new HashCerrado<string,int>(3,hash3,sencondHash);
-mihash->insert("pepe",0);
-mihash->insert("pepe1",1);
-mihash->insert("pepe2",2);
-
-  cout << mihash->existe("pepe1") << endl;
-  cout << mihash->existe("pepe4") << endl;
-
-*/
 
     return 0;
 }
