@@ -21,13 +21,6 @@ int main()
     int n_reads;
     cin >> n_reads;
     
-
- //HashAbierto<string, string> *mihash = new HashAbierto <string,string>(10,hash3);
- //mihash->insert("pepe@pepe","pepe@pepe");
-//mihash->insert("pepe@pepe","pepe@pepe");
-//mihash->insert("pepe@pepe1","pepe@pepe1");
-//cout << mihash->unicos();
-
 HashAbierto<string, string> *mihash = new HashAbierto <string,string>(n_reads,hash3);
 for (int i = 0; i < n_reads; i++)
     {
