@@ -95,4 +95,16 @@ class MinHeap {
      hundir(1);
      return elemTope;
      }
+
+    void insertSinOrdenar(T element){
+        assert(!estalleno());
+        arr[sig]=element;
+        sig++;
+    }
+
+    void heapify() {
+        for(int i = sig/2; i >= 1; i--) {
+            hundir(i);
+        }
+    }
 };
