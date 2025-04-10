@@ -23,16 +23,6 @@ class MinHeap {
             arr[pos1]=arr[pos2];
             arr[pos2]=aux;
         }
-        void flotar (int pos){
-            if(pos>1){//no estamos en la raiz
-               T padreEl = arr [padre(pos)];
-               T element = arr[pos];
-               if (padreEl - element>0){
-                    swap(pos,padre(pos));
-                    flotar(padre(pos));
-               }
-            }
-        }
 
         void hundir (int pos){
             int posHizq= hIzq(pos);
@@ -50,8 +40,6 @@ class MinHeap {
             }
         }
 
-       
-
         bool estalleno(){
         return this->sig > this->cap;
         }
@@ -66,26 +54,6 @@ class MinHeap {
         cap=_cap;
         
     }    
-     void insert (T element){
-        assert(!estalleno());
-        arr[sig]=element;
-        //cout << "inserte " << arr[sig] << endl;
-        sig++;
-        flotar(sig-1);
-     }
-
-     T tope(){
-        assert(!estavacio());
-        return arr[1];
-
-     } 
-
-     void removerTope(){
-     assert(!estavacio());
-     arr[1]= arr[sig-1]; //swap(1,sig-1)
-     sig--;
-     hundir(1);
-     }
 
      T retornoYeliminoTope(){
      assert(!estavacio());
