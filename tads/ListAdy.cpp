@@ -1,6 +1,7 @@
 //#include "ColaFifo.cpp"
 #include <climits>
 #include <iostream>
+#include "ColaFifo.cpp"
 
 using namespace std;
 
@@ -81,7 +82,9 @@ class ListAdy {
               int destino = ady->dato.destino;
               gradoDeEntrada[destino]--;
               if (gradoDeEntrada[destino] == 0) {
-                    processNodes(destino, nodesVisiteds++ ,grafo,gradoDeEntrada);
+                nodesVisiteds++;
+                cout << "caaaant sumo uno y tot es : "<< nodesVisiteds << endl; 
+                    processNodes(destino, nodesVisiteds,grafo,gradoDeEntrada);
       }
       ady = ady->sig;
     }   
@@ -91,7 +94,7 @@ class ListAdy {
  bool hayCiclo(ListAdy *grafo) {
     int V = grafo->getV();
     int extraNodes=0;
-    int *gradoDeEntrada = new int[V + 1]();
+    int *gradoDeEntrada = new int[V + 1]();  
 
     // Calcular el grado de entrada de cada nodo
     for (int v = 1; v < V + 1; v++) {
@@ -102,15 +105,33 @@ class ListAdy {
         ady = ady->sig;
         }
     }
-   //  QueueImp<int> *cola = new QueueImp<int>();
+    QueueImp<int> *cola = new QueueImp<int>();
      for (int v = 1; v < V + 1; v++) {
       if (gradoDeEntrada[v] == 0) {
-        cout << v << endl;
-         extraNodes++;
-         extraNodes = processNodes(v,extraNodes,grafo,gradoDeEntrada);   
+         cola->enqueue(v);
+       //  extraNodes++;
+        // extraNodes = processNodes(v,extraNodes,grafo,gradoDeEntrada);   
     }
   }
-    return extraNodes != V+1;
+
+  while (!cola->isEmpty()) {
+    int v = cola->dequeue();
+    extraNodes++;
+   // cout << v << endl;
+    Nodo<Arista> *ady = grafo->adyacentesA(v);
+    while (ady != nullptr) {
+      int destino = ady->dato.destino;
+      gradoDeEntrada[destino]--;
+      if (gradoDeEntrada[destino] == 0) {
+         cola->enqueue(destino);
+      }
+      ady = ady->sig;
+    }
+  }
+    //cout << "cant TOtal vert: "<< V << endl; 
+
+    //cout << "cant de nodos process: "<< extraNodes << endl; 
+    return extraNodes != V;
 }
 
 
