@@ -8,12 +8,10 @@ using namespace std;
 
 int main()
 {
-
     int cvert;
     cin >> cvert;
     int caristas;
     cin >> caristas;
-
     
   ListAdy *miGrafito = new ListAdy(cvert);
    for (int i = 0; i < caristas; i++)
@@ -25,16 +23,15 @@ int main()
         cin >> dst;
         miGrafito->aniadirArista(og,dst);
     }
-
 /*
+ ListAdy *miGrafito = new ListAdy(4);
   miGrafito->aniadirArista(1, 2);
   miGrafito->aniadirArista(2, 3);
   miGrafito->aniadirArista(3, 4);
   miGrafito->aniadirArista(4,2);
-  */  
+  */
   
-  bool result = hayCiclo(miGrafito);
-
+bool result = hayCiclo(miGrafito);
 cout << result;
 
   return 0;

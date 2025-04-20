@@ -82,9 +82,9 @@ class ListAdy {
               int destino = ady->dato.destino;
               gradoDeEntrada[destino]--;
               if (gradoDeEntrada[destino] == 0) {
-                nodesVisiteds++;
-                cout << "caaaant sumo uno y tot es : "<< nodesVisiteds << endl; 
-                    processNodes(destino, nodesVisiteds,grafo,gradoDeEntrada);
+                   nodesVisiteds++;
+                   //cout << "caaaant sumo uno y tot es : "<< nodesVisiteds << endl; 
+                 nodesVisiteds = processNodes(destino, nodesVisiteds,grafo,gradoDeEntrada);
       }
       ady = ady->sig;
     }   
@@ -93,7 +93,7 @@ class ListAdy {
 
  bool hayCiclo(ListAdy *grafo) {
     int V = grafo->getV();
-    int extraNodes=0;
+    int nodosTopo=0;
     int *gradoDeEntrada = new int[V + 1]();  
 
     // Calcular el grado de entrada de cada nodo
@@ -105,33 +105,19 @@ class ListAdy {
         ady = ady->sig;
         }
     }
-    QueueImp<int> *cola = new QueueImp<int>();
-     for (int v = 1; v < V + 1; v++) {
-      if (gradoDeEntrada[v] == 0) {
-         cola->enqueue(v);
-       //  extraNodes++;
-        // extraNodes = processNodes(v,extraNodes,grafo,gradoDeEntrada);   
-    }
-  }
-
-  while (!cola->isEmpty()) {
-    int v = cola->dequeue();
-    extraNodes++;
-   // cout << v << endl;
-    Nodo<Arista> *ady = grafo->adyacentesA(v);
-    while (ady != nullptr) {
-      int destino = ady->dato.destino;
-      gradoDeEntrada[destino]--;
-      if (gradoDeEntrada[destino] == 0) {
-         cola->enqueue(destino);
+      for (int v = 1; v < V + 1; v++) {
+       if (gradoDeEntrada[v] == 0) {
+        nodosTopo++;
+        Nodo<Arista> *ady = grafo->adyacentesA(v);
+        while (ady != nullptr) {
+              int destino = ady->dato.destino;
+              gradoDeEntrada[destino]--;
+              ady = ady->sig;
+        }          
       }
-      ady = ady->sig;
     }
-  }
-    //cout << "cant TOtal vert: "<< V << endl; 
+    return nodosTopo != V;
 
-    //cout << "cant de nodos process: "<< extraNodes << endl; 
-    return extraNodes != V;
 }
 
 
