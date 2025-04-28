@@ -9,10 +9,6 @@ class MinHeap {
         int cap;
       //  bool (*cmpfunc) (T a, T b);
 
-        int padre(int pos){
-            return pos/2;
-        }
-
         int hIzq(int pos){
             return pos*2;
         }
