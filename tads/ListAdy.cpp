@@ -34,11 +34,9 @@ struct Nodo{
 class ListAdy {
 
     private:
-
         int cantV;
         int A;
         Nodo <Arista> **grafo;
-
 
     public:
 
@@ -71,32 +69,17 @@ class ListAdy {
     A++;
   }
    
-   int getV() { return cantV; }
+  int getV() { return cantV; }
 
   int getA() { return A; }
 };
-
-  int processNodes(int InitNode, int nodesVisiteds,ListAdy *grafo,  int *gradoDeEntrada) {
-     Nodo<Arista> *ady = grafo->adyacentesA(InitNode);
-     while (ady != nullptr) {
-              int destino = ady->dato.destino;
-              gradoDeEntrada[destino]--;
-              if (gradoDeEntrada[destino] == 0) {
-                   nodesVisiteds++;
-                   //cout << "caaaant sumo uno y tot es : "<< nodesVisiteds << endl; 
-                 nodesVisiteds = processNodes(destino, nodesVisiteds,grafo,gradoDeEntrada);
-      }
-      ady = ady->sig;
-    }   
-     return nodesVisiteds;
-    }
 
  bool hayCiclo(ListAdy *grafo) {
     int V = grafo->getV();
     int nodosTopo=0;
     int *gradoDeEntrada = new int[V + 1]();  
 
-    // Calcular el grado de entrada de cada nodo
+    
     for (int v = 1; v < V + 1; v++) {
         Nodo<Arista> *ady = grafo->adyacentesA(v);
         while (ady != nullptr) {

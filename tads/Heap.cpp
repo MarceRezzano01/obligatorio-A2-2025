@@ -7,6 +7,7 @@ class MinHeap {
         T *arr;
         int sig;
         int cap;
+        bool (*cmpfunc) (T a, T b);
 
         int padre(int pos){
             return pos/2;
@@ -52,13 +53,21 @@ class MinHeap {
         arr = new T[_cap];
         sig=1;
         cap=_cap;
+        cmpfunc = (T a, T b) { return a - b < 0; }; 
         
-    }    
+    }
+    MinHeap (int _cap, bool _cmpfunc(T a, T b)){
+        arr = new T[_cap];
+        sig=1;
+        cap=_cap;
+        cmpfunc = _cmpfunc;
+        
+    }      
 
      T retornoYeliminoTope(){
      assert(!estavacio());
      T elemTope = arr[1];
-     arr[1]= arr[sig-1]; //swap(1,sig-1)
+     arr[1]= arr[sig-1];
      sig--;
      hundir(1);
      return elemTope;

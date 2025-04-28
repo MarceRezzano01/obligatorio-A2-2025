@@ -29,6 +29,6 @@ for (int i = 0; i < n_reads; i++)
         mihash->insert(mail,mail);
     } 
 
-   cout << "unicoss " << mihash->unicos();
+   cout  << mihash->unicos() << endl;
    return 0;
 }
