@@ -7,7 +7,7 @@ class MinHeap {
         T *arr;
         int sig;
         int cap;
-      //  bool (*cmpfunc) (T a, T b);
+        bool (*cmpfunc) (T a, T b);
 
         int hIzq(int pos){
             return pos*2;
@@ -19,6 +19,21 @@ class MinHeap {
             T aux = arr[pos1];
             arr[pos1]=arr[pos2];
             arr[pos2]=aux;
+        }
+
+        int padre(int pos) {
+            return pos / 2;
+        }
+       
+        void flotar (int pos){
+            if(pos>1){//no estamos en la raiz
+               T padreEl = arr [padre(pos)];
+               T element = arr[pos];
+               if ( padreEl - element >0){
+                    swap(pos,padre(pos));
+                    flotar(padre(pos));
+               }
+            }
         }
 
         void hundir (int pos){
@@ -37,30 +52,21 @@ class MinHeap {
             }
         }
 
-        bool estalleno(){
-        return this->sig > this->cap;
-        }
-        bool estavacio(){
-        return this->sig ==1;
-        }
-
     public:
     MinHeap (int _cap){
         arr = new T[_cap];
         sig=1;
-        cap=_cap;
-      //  cmpfunc = (T a, T b) { return a - b < 0; }; 
-        
+        cap=_cap;    
     }
- /* 
-    MinHeap (int _cap, bool _cmpfunc(T a, T b)){
+ 
+    MinHeap (int _cap, bool (*_cmpfunc)(T a, T b)){
         arr = new T[_cap];
         sig=1;
         cap=_cap;
         cmpfunc = _cmpfunc;
         
     }      
-*/
+
      T retornoYeliminoTope(){
      assert(!estavacio());
      T elemTope = arr[1];
@@ -69,6 +75,13 @@ class MinHeap {
      hundir(1);
      return elemTope;
      }
+
+     void insertar(T element) {
+        assert(!estalleno());
+        arr[sig] = element;
+        sig++;
+        flotar(sig - 1);
+        }
 
     void insertSinOrdenar(T element){
         assert(!estalleno());
@@ -81,4 +94,12 @@ class MinHeap {
             hundir(i);
         }
     }
+
+    bool estalleno(){
+        return this->sig > this->cap;
+        }
+        
+    bool estavacio(){
+        return this->sig ==1;
+        }
 };
