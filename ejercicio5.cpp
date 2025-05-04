@@ -13,7 +13,7 @@ int main()
     int caristas;
     cin >> caristas;
     
-  ListAdy *miGrafito = new ListAdy(cvert);
+  ListAdy *GrafitoTopo = new ListAdy(cvert);
    for (int i = 0; i < caristas; i++)
     {
         int og;
@@ -21,10 +21,10 @@ int main()
 
         cin >> og;
         cin >> dst;
-        miGrafito->aniadirArista(og,dst);
+        GrafitoTopo->aniadirArista(og,dst);
     }
   
-bool result = hayCiclo(miGrafito);
+bool result = hayCiclo(GrafitoTopo);
 cout << result;
 
   return 0;

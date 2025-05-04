@@ -10,19 +10,33 @@ using namespace std;
 int main()
 {
 
-    int n_reads;
-   // cin >> n_reads;
+    int cvert;
+    cin >> cvert;
+    int caristas;
+    cin >> caristas;
 
-  ListAdy *GrafitoDist = new ListAdy(4);
-  GrafitoDist->aniadirArista(1,2,10);
-  GrafitoDist->aniadirArista(1,3,5);
-  GrafitoDist->aniadirArista(3,2,3);
-  GrafitoDist->aniadirArista(2,4,1);
-  GrafitoDist->aniadirArista(3,4,8);
+  ListAdy *GrafitoDist = new ListAdy(cvert);
 
-  caminosXVert(1,GrafitoDist);
+    for (int i = 0; i < caristas; i++)
+    {
+        int og;
+        int dst;
+        int cost;
 
+        cin >> og;
+        cin >> dst;
+        cin >> cost;
+        GrafitoDist->aniadirArista(og,dst,cost);
+    }
+
+    int verticesAbuscarC;
+    cin >> verticesAbuscarC;
+     for (int i = 0; i < verticesAbuscarC; i++)
+    {
       
-    // TODO
+        int initVert;
+        cin >> initVert;
+        caminosXVert(initVert,GrafitoDist);
+    }
     return 0;
 }

@@ -17,22 +17,22 @@ int main() {
     cin >> n_reads;
 
    
-    MinHeap<int> *miHeap = new MinHeap<int>(n_reads,defaultCmp);
+    MinHeap<int> *HeapDesOrd = new MinHeap<int>(n_reads,defaultCmp);
 
 
      for (int i = 0; i < n_reads; i++)
     {
         int numInsert;
         cin >> numInsert;
-        miHeap->insertSinOrdenar(numInsert);
+        HeapDesOrd->insertSinOrdenar(numInsert);
     }
 
-    miHeap->heapify();
+    HeapDesOrd->heapify();
 
     for(int i = 0; i < n_reads; i++) {
-        cout << miHeap->retornoYeliminoTope() << endl;
+        cout << HeapDesOrd->retornoYeliminoTope() << endl;
     }
 
-    delete miHeap;
+    delete HeapDesOrd;
     return 0;
 }
