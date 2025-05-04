@@ -7,7 +7,7 @@ class MinHeap {
         T *arr;
         int sig;
         int cap;
-        bool (*cmpfunc) (T a, T b);
+        int (*cmpfunc) (T,T);
 
         int hIzq(int pos){
             return pos*2;
@@ -21,17 +21,14 @@ class MinHeap {
             arr[pos2]=aux;
         }
 
-        int padre(int pos) {
-            return pos / 2;
-        }
-       
         void flotar (int pos){
-            if(pos>1){//no estamos en la raiz
-               T padreEl = arr [padre(pos)];
+            int indexPadre=pos / 2;
+            if(pos>1){
+               T padreDePos = arr [indexPadre];
                T element = arr[pos];
-               if ( padreEl - element >0){
-                    swap(pos,padre(pos));
-                    flotar(padre(pos));
+               if (cmpfunc(padreDePos,element) >0){
+                    swap(pos,indexPadre);
+                    flotar(indexPadre);
                }
             }
         }
@@ -41,11 +38,11 @@ class MinHeap {
             int posHDer=hDer(pos);
             if(posHizq<sig){
                 int posMenorHijo=posHizq;
-                if (posHDer<sig && arr[posHizq] - arr[posHDer] >0){
+                if (posHDer<sig && cmpfunc (arr[posHizq], arr[posHDer])>0){
                     posMenorHijo=posHDer;
                 }
 
-                if (arr[pos] - arr[posMenorHijo] > 0) {
+                if ( cmpfunc (arr[pos], arr[posMenorHijo]) > 0) {
                     swap(pos, posMenorHijo);
                     hundir(posMenorHijo);
                 }
@@ -53,13 +50,7 @@ class MinHeap {
         }
 
     public:
-    MinHeap (int _cap){
-        arr = new T[_cap];
-        sig=1;
-        cap=_cap;    
-    }
- 
-    MinHeap (int _cap, bool (*_cmpfunc)(T a, T b)){
+    MinHeap (int _cap, int (*_cmpfunc)(T,T)){
         arr = new T[_cap];
         sig=1;
         cap=_cap;
@@ -68,12 +59,12 @@ class MinHeap {
     }      
 
      T retornoYeliminoTope(){
-     assert(!estavacio());
-     T elemTope = arr[1];
-     arr[1]= arr[sig-1];
-     sig--;
-     hundir(1);
-     return elemTope;
+      assert(!estavacio());
+      T elemTope = arr[1];
+      arr[1]= arr[sig-1];
+      sig--;
+      hundir(1);
+      return elemTope;
      }
 
      void insertar(T element) {

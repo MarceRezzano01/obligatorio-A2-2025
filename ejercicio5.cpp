@@ -23,13 +23,6 @@ int main()
         cin >> dst;
         miGrafito->aniadirArista(og,dst);
     }
-/*
- ListAdy *miGrafito = new ListAdy(4);
-  miGrafito->aniadirArista(1, 2);
-  miGrafito->aniadirArista(2, 3);
-  miGrafito->aniadirArista(3, 4);
-  miGrafito->aniadirArista(4,2);
-  */
   
 bool result = hayCiclo(miGrafito);
 cout << result;

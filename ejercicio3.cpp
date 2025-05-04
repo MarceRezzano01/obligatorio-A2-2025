@@ -6,12 +6,18 @@
 
 using namespace std;
 
+
+ int defaultCmp(int a, int b){
+        return a-b;
+    };
+
+
 int main() {
     int n_reads;
     cin >> n_reads;
 
-
-    MinHeap<int> *miHeap = new MinHeap<int>(n_reads);
+   
+    MinHeap<int> *miHeap = new MinHeap<int>(n_reads,defaultCmp);
 
 
      for (int i = 0; i < n_reads; i++)

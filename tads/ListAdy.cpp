@@ -1,4 +1,3 @@
-//#include "ColaFifo.cpp"
 #include <climits>
 #include <iostream>
 #include "Heap.cpp"
@@ -107,14 +106,28 @@ class ListAdy {
 
 }
 
+struct cam {
+  int vert;
+  int costo;
+  cam() {}
+  cam(int _vert, int _costo) {
+    vert = _vert;
+    costo = _costo;
+  }
+};
+
+int cmpCamino(cam c1, cam c2) {
+  return c1.costo - c2.costo;
+}
+
 void caminosXVert(int vertInit, ListAdy *grafo) {
   int V = grafo->getV();
-   MinHeap<int> *HeapDist = new MinHeap<int>(V+1);
+   MinHeap<cam> *HeapDist = new MinHeap<cam> (V * V, cmpCamino);
    int *dist = new int[V + 1]();
    bool *vst = new bool[V + 1]();
 
-
-   HeapDist->insertSinOrdenar(vertInit);
+  cam caminoInit(vertInit, 0);
+   HeapDist->insertar(caminoInit);
    for (int i = 1; i < V + 1; i++) {
      vst[i] = false;
      dist[i] = INT_MAX;
@@ -122,16 +135,17 @@ void caminosXVert(int vertInit, ListAdy *grafo) {
    dist[vertInit] = 0;
 
    while (!HeapDist->estavacio()) {
-     int aProcesar = HeapDist->retornoYeliminoTope();
-     if (!vst[aProcesar]) {
-         vst[aProcesar] = true;
-         Nodo<Arista> *ady = grafo->adyacentesDe(aProcesar);
+     cam aProcesar = HeapDist->retornoYeliminoTope();
+     if (!vst[aProcesar.vert]) {
+         vst[aProcesar.vert] = true;
+         Nodo<Arista> *ady = grafo->adyacentesDe(aProcesar.vert);
          while (ady != nullptr) {
-          int costoArista = ady->dato.costo;
           int destino= ady->dato.destino; 
-          if (!vst[destino] && dist[destino] > costoArista + dist[aProcesar]) {
-            dist[destino] = costoArista + dist[aProcesar];
-            HeapDist->insertSinOrdenar(destino);
+          int costoAristaD = ady->dato.costo;
+       
+          if (!vst[destino] && dist[destino] > costoAristaD + dist[aProcesar.vert]) {
+            dist[destino] = costoAristaD + dist[aProcesar.vert];
+            HeapDist->insertar( cam (destino, dist[destino]));
          }
          ady = ady->sig;
       }
@@ -141,8 +155,7 @@ void caminosXVert(int vertInit, ListAdy *grafo) {
      if (i == vertInit ||!vst[i]) {
          cout << -1 << endl;
      }else{
-        cout << "el costo de ir desde " << vertInit << " hasta " << i
-            << " es de: " << dist[i] << endl;
+        cout << dist[i] << endl;
      }
    
    }
