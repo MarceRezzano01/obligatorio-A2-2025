@@ -30,10 +30,10 @@ template <typename k, typename v>
 class HashAbierto
 {
 private:
-    ListImp<keyValue<k, v> > *table; // la tabla
-    int n;                          // cant elementos
-    int b;                          // tamaño de la tabla o cant buckets
-    int (*hash)(k);                 // funcion de hash
+    ListImp<keyValue<k, v> > *table; 
+    int n;                          
+    int b;                          
+    int (*hash)(k);                 
     int repetidos;
     
     float factorDeCarga()

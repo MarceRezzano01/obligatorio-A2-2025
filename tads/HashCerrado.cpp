@@ -2,7 +2,7 @@
 using namespace std;
 
 template <typename k, typename v>
-struct keyValue{//estructura de la tabla
+struct keyValue{
     k key;
     v value;
     keyValue(k key, v value){
@@ -14,10 +14,10 @@ struct keyValue{//estructura de la tabla
 template <typename k, typename v>
 class HashCerrado{
   private:
-        keyValue<k, v> **table;//la tabla
-        int n;//cant elementos
-        int b;//tamaño de la tabla o cant buckets
-        int (*hash)(k); //funcion de hash
+        keyValue<k, v> **table;
+        int n;
+        int b;
+        int (*hash)(k); 
         int (*SecondHash)(k);
 
          float factorDeCarga() {
@@ -35,10 +35,6 @@ class HashCerrado{
             hash=unhasg;
             SecondHash=secHash;
         };
-
-
-        /// Doble hashing: intento i =(H(k)+h2(k)x i) % _b
-// h(k) fun hash y h2(k) otra funcion de hash
 
          void insert(k key, v value){    
             int pos = abs(this->hash(key))%this->b;
@@ -58,7 +54,6 @@ class HashCerrado{
                int hagoSecH = abs(this->SecondHash(key)%this->b);
                //cout << "SegHas " << hagoSecH << endl;
                pos = (pos + (hagoSecH * intentos))%this->b;
-               //cout << "PROXIMA POS A INSERT " << pos << endl;
             }
             }
          };
