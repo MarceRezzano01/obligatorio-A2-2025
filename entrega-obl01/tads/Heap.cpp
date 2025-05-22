@@ -1,0 +1,96 @@
+#include <iostream>
+using namespace std;
+
+template <typename T>
+class MinHeap {
+    private:
+        T *arr;
+        int sig;
+        int cap;
+        int (*cmpfunc) (T,T);
+
+        int hIzq(int pos){
+            return pos*2;
+        }
+        int hDer(int pos){
+            return (pos*2)+1;
+        }
+        void swap(int pos1, int pos2){
+            T aux = arr[pos1];
+            arr[pos1]=arr[pos2];
+            arr[pos2]=aux;
+        }
+
+        void flotar (int pos){
+            int indexPadre=pos / 2;
+            if(pos>1){
+               T padreDePos = arr [indexPadre];
+               T element = arr[pos];
+               if (cmpfunc(padreDePos,element) >0){
+                    swap(pos,indexPadre);
+                    flotar(indexPadre);
+               }
+            }
+        }
+
+        void hundir (int pos){
+            int posHizq= hIzq(pos);
+            int posHDer=hDer(pos);
+            if(posHizq<sig){
+                int posMenorHijo=posHizq;
+                if (posHDer<sig && cmpfunc (arr[posHizq], arr[posHDer])>0){
+                    posMenorHijo=posHDer;
+                }
+
+                if ( cmpfunc (arr[pos], arr[posMenorHijo]) > 0) {
+                    swap(pos, posMenorHijo);
+                    hundir(posMenorHijo);
+                }
+            }
+        }
+
+    public:
+    MinHeap (int _cap, int (*_cmpfunc)(T,T)){
+        arr = new T[_cap];
+        sig=1;
+        cap=_cap;
+        cmpfunc = _cmpfunc;
+        
+    }      
+
+     T retornoYeliminoTope(){
+      assert(!estavacio());
+      T elemTope = arr[1];
+      arr[1]= arr[sig-1];
+      sig--;
+      hundir(1);
+      return elemTope;
+     }
+
+     void insertar(T element) {
+        assert(!estalleno());
+        arr[sig] = element;
+        sig++;
+        flotar(sig - 1);
+        }
+
+    void insertSinOrdenar(T element){
+        assert(!estalleno());
+        arr[sig]=element;
+        sig++;
+    }
+
+    void heapify() {
+        for(int i = sig/2; i >= 1; i--) {
+            hundir(i);
+        }
+    }
+
+    bool estalleno(){
+        return this->sig > this->cap;
+        }
+        
+    bool estavacio(){
+        return this->sig ==1;
+        }
+};
