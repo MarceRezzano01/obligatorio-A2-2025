@@ -63,7 +63,6 @@ class EdificiosDac {
     void PrintSiluestas() { 
     //LLAMO AL DAC
       ListImp<Pares> * ret = obtenerSilueta(SiuetasEdificios, 0, cantEdif - 1);
-        cout << "Termino siluetas " << endl;
     //PRINTEO SILUETAS
        for (int i = 0; i < ret->getSize(); i++) {
             cout << ret->get(i).inicio << " " << ret->get(i).altura << endl; 
