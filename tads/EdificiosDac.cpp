@@ -1,4 +1,6 @@
 #include "ListImp.cpp"
+#include <iostream>
+using namespace std;
 
 struct Edificio{
     int posInicio;
@@ -37,13 +39,11 @@ class EdificiosDac {
 
  private:
         Edificio ** SiuetasEdificios;
-        int n =1;
+        int n =0;
         int initDac;
         int endDac;
         int cantEdif;
         ListImp<Pares> *siluetasPegadas;
-        //Par **siluetasPegadas;
-
 
   public:
 
@@ -57,22 +57,41 @@ class EdificiosDac {
             this->cantEdif = _cantEdificios;
         };
 
+    void PrintSiluestas() {
+        cout << "entando con edif = "<< cantEdif << endl;
+     
+         ListImp<Pares> * ret = obtenerSilueta(SiuetasEdificios, 0, cantEdif);
+        for (int i = 0; i < ret->getSize(); i++) {
+            cout << "Inicio: " << ret->get(i).inicio << ", Altura: " << ret->get(i).altura << endl; 
+        }
+    }
+
+
     ListImp<Pares> * obtenerSilueta( Edificio ** SiuetasEdificios, int inicio, int fin) {
-        if (this->cantEdif == 1){
-           this->siluetasPegadas->insert(Pares(SiuetasEdificios[0]->posInicio, SiuetasEdificios[0]->altura));
+       // cout << "entro a obtener silueta con fin en: " << fin << endl;
+        if (fin == inicio){
+             cout << "entro a obtener silueta en CB " << endl;
+             ListImp<Pares> *cb= new ListImp<Pares>[this->cantEdif];
+              cb->insert(Pares(SiuetasEdificios[fin]->posInicio, SiuetasEdificios[fin]->altura));
            return this->siluetasPegadas;
         } 
 
-        //int mid = inicio + (fin - inicio) / 2;
-        int mid = cantEdif/ 2;
+        int mid = inicio + fin / 2;
+       //  cout << "miatad: "<< mid<< endl;
          ListImp<Pares> * siluetaIzq = obtenerSilueta(SiuetasEdificios, inicio, mid);
+        cout << "Fin silueta izq " << endl;
          ListImp<Pares> * SiluestaDer = obtenerSilueta(SiuetasEdificios, mid + 1, fin);
+          cout << "Fin silueta der " << endl;
 
         return mergeSiluetas(siluetaIzq, SiluestaDer);
        // return obtenerSilueta (SiuetasEdificios, 0, cantEdif - 1);
+       
       }
 
     ListImp<Pares>* mergeSiluetas( ListImp<Pares>* left,  ListImp<Pares>*  right) {
+         cout << "entro a MERGE de Siluetas"<< endl;
+
+         
         ListImp<Pares> *merged= new ListImp<Pares>[this->cantEdif];
         int h1 = 0, h2 = 0, i = 0, j = 0;
 
@@ -116,7 +135,8 @@ class EdificiosDac {
 
    
     void agregarEdificio(int inicio, int fin, int altura) {
-        this->SiuetasEdificios[n] =  new Edificio(inicio, fin, altura);
+        this->SiuetasEdificios[this->n] =  new Edificio(inicio, fin, altura);
+        this->n++;
         
     }
     
@@ -124,6 +144,6 @@ class EdificiosDac {
         return (a > b) ? a : b;
     }
 
-
+    
 
 };
