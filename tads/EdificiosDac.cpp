@@ -81,49 +81,52 @@ class EdificiosDac {
 
         int mid =  (inicio + fin) / 2;
          ListImp<Pares> * siluetaIzq = obtenerSilueta(SiuetasEdificios, inicio, mid);
-         ListImp<Pares> * SiluestaDer = obtenerSilueta(SiuetasEdificios, mid + 1, fin);
+         ListImp<Pares> * siluestaDer = obtenerSilueta(SiuetasEdificios, mid + 1, fin);
 
-        //return muestroSiluetas(siluetaIzq, SiluestaDer);
-        return mergeSiluetas(siluetaIzq, SiluestaDer);
+        //return muestroSiluetas(siluetaIzq, siluestaDer);
+        return mergeSiluetas(siluetaIzq, siluestaDer);
       
        
       }
 
-    ListImp<Pares>* mergeSiluetas( ListImp<Pares>* left,  ListImp<Pares>*  right) {
+    ListImp<Pares>* mergeSiluetas( ListImp<Pares>* siluetaIzq,  ListImp<Pares>*  siluestaDer) {
         ListImp<Pares> *merged= new ListImp<Pares>[this->cantEdif];
-        int h1 = 0, h2 = 0, i = 0, j = 0;
+        int alturaS1 = 0;
+        int alturaS2 = 0;
+        int i = 0; 
+        int j = 0;
 
-        while (i < left->getSize() && j < right->getSize()) {
-            if (left->get(i).inicio < right->get(j).inicio ) {
-                int x = left->get(i).inicio;
-                h1 = left->get(i).altura;
-                int maxH = max(h1, h2);
-                agregoSilueta(merged, x, maxH);
+        while (i < siluetaIzq->getSize() && j < siluestaDer->getSize()) {
+            if (siluetaIzq->get(i).inicio < siluestaDer->get(j).inicio ) {
+                int siluetaInicio = siluetaIzq->get(i).inicio;
+                alturaS1 = siluetaIzq->get(i).altura;
+                int maxH = max(alturaS1, alturaS2);
+                agregoSilueta(merged, siluetaInicio, maxH);
                 i++;
-            } else if (left->get(i).inicio  > right->get(j).inicio) {
-                int x = right->get(j).inicio;
-                h2 = right->get(j).altura;
-                int maxH = max(h1, h2);
-                agregoSilueta(merged, x, maxH);
+            } else if (siluetaIzq->get(i).inicio  > siluestaDer->get(j).inicio) {
+                int siluetaInicio = siluestaDer->get(j).inicio;
+                alturaS2 = siluestaDer->get(j).altura;
+                int maxH = max(alturaS1, alturaS2);
+                agregoSilueta(merged, siluetaInicio, maxH);
                 j++;
             } else {
-                int x = left->get(i).inicio;
-                h1 =  left->get(i).altura;
-                h2 = right->get(j).altura;
-                int maxH = max(h1, h2);
-                agregoSilueta(merged, x, maxH);
+                int siluetaInicio = siluetaIzq->get(i).inicio;
+                alturaS1 =  siluetaIzq->get(i).altura;
+                alturaS2 = siluestaDer->get(j).altura;
+                int maxH = max(alturaS1, alturaS2);
+                agregoSilueta(merged, siluetaInicio, maxH);
                 i++;
                 j++;
             }
         }
 
-        while (i < left->getSize()) {
-            agregoSilueta(merged, left->get(i).inicio, left->get(i).altura);
+        while (i < siluetaIzq->getSize()) {
+            agregoSilueta(merged, siluetaIzq->get(i).inicio, siluetaIzq->get(i).altura);
             i++;
         }
 
-        while (j < right->getSize()) {
-             agregoSilueta(merged,right->get(j).inicio,  right->get(j).altura);
+        while (j < siluestaDer->getSize()) {
+             agregoSilueta(merged,siluestaDer->get(j).inicio,  siluestaDer->get(j).altura);
              j++;
         }
 
@@ -163,16 +166,16 @@ class EdificiosDac {
         return (a > b) ? a : b;
     }
 
-     ListImp<Pares>* muestroSiluetas( ListImp<Pares>* left,  ListImp<Pares>*  right) {
+     ListImp<Pares>* muestroSiluetas( ListImp<Pares>* siluetaIzq,  ListImp<Pares>*  siluestaDer) {
         cout << "Izquierda: " << endl;
-          for (int i = 0; i < left->getSize(); i++) {
-            cout << left->get(i).inicio << " " << left->get(i).altura << endl; 
+          for (int i = 0; i < siluetaIzq->getSize(); i++) {
+            cout << siluetaIzq->get(i).inicio << " " << siluetaIzq->get(i).altura << endl; 
         }
          cout << "Der: " << endl;
-          for (int i = 0; i < right->getSize(); i++) {
-            cout << right->get(i).inicio << " " << right->get(i).altura << endl; 
+          for (int i = 0; i < siluestaDer->getSize(); i++) {
+            cout << siluestaDer->get(i).inicio << " " << siluestaDer->get(i).altura << endl; 
         }
-        return left;
+        return siluetaIzq;
 
      }
 

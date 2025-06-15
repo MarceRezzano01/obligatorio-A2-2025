@@ -22,7 +22,7 @@ class UltimoMomentoTab {
         int pesoMaximoEntrega;
         int cantMaximoLineas;
         int cantEjerciciosTot;
-        int*** mochila; //Ejercicio x capacidad(lineas y peso)
+        int*** mochila; //Ejercicio x capacidad(lineas y peso) 2D
 
         
         
@@ -41,7 +41,7 @@ public:
              this->mochila[i][j] =  new int [this->cantMaximoLineas + 1];
              for (int k = 0; k <= this->cantMaximoLineas; k++)
              {
-                this->mochila[i][j][k] = 0; // Inicializamos la mochila con 0
+                this->mochila[i][j][k] = 0;
              }
              
                
