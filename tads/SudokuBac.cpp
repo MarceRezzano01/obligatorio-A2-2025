@@ -80,7 +80,7 @@ class SudokuBac  {
 
                 if (sudoku[fila][columna] == 0) {
                     for (int numEnJuego = 1; numEnJuego <= valorMaximo; ++numEnJuego) {
-                        if (numeroValido(fila, columna, numEnJuego, sudoku, filas, columnas)) {
+                        if (numeroValido(fila, columna, numEnJuego, sudoku, filas, columnas)) {//hago movimiento
                             sudoku[fila][columna] = numEnJuego;
                             if(resolverSudoku(sudoku, filas, columnas, valorMaximo)) {
                                 return true; 
@@ -92,7 +92,7 @@ class SudokuBac  {
                 }
             }
         }
-        return true; // Sudoku solved
+        return true;
     }
 
        void imprimoResuleto(){

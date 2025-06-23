@@ -15,7 +15,6 @@ struct Edificio{
 
 struct Pares{
     int inicio;
-    int fin;
     int altura;
     Pares(int _inicio, int _altura ){
         this->inicio = _inicio;
@@ -72,7 +71,6 @@ class EdificiosDac {
 
     ListImp<Pares> * obtenerSilueta( Edificio ** SiuetasEdificios, int inicio, int fin) {
         if (fin == inicio){
-          //  cout << "entro a obtener silueta en CB " << endl;
              ListImp<Pares> *cb= new ListImp<Pares>[this->cantEdif];
              cb->insert(Pares(SiuetasEdificios[inicio]->posInicio, SiuetasEdificios[inicio]->altura));
              cb->insert(Pares(SiuetasEdificios[inicio]->posFin, 0));
@@ -83,7 +81,6 @@ class EdificiosDac {
          ListImp<Pares> * siluetaIzq = obtenerSilueta(SiuetasEdificios, inicio, mid);
          ListImp<Pares> * siluestaDer = obtenerSilueta(SiuetasEdificios, mid + 1, fin);
 
-        //return muestroSiluetas(siluetaIzq, siluestaDer);
         return mergeSiluetas(siluetaIzq, siluestaDer);
       
        
