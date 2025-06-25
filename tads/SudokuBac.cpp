@@ -37,7 +37,6 @@ class SudokuBac  {
     void insert(int _fila, int _columna, int valor) {
         if (_fila >= 0 && _fila < filas && _columna >= 0 && _columna < columnas) {
             sudoku[_fila][_columna] = valor;
-           // cout << "se inserto el valor " << valor << " en la fila " << _fila << " y columna " << _columna << endl;
         } else {
             cout << "se va el isert." << endl;
         }
@@ -75,25 +74,24 @@ class SudokuBac  {
     }
 
 
-    bool resolverSudokuSinFor(int **&sudoku, int filaAct, int columnaAct, int valorMaximo) {
+    bool resolverSudoku(int **&sudoku, int filaAct, int columnaAct, int valorMaximo) {
     if (filaAct == filas) {
-       //   cout << "LLEGO AL FINAL" << endl;
         return true;
     }
 
-    // remplazamos los fors 
+    // remplazamos los fors recursivamente 
     int ProxFila = (columnaAct == columnas - 1) ? filaAct + 1 : filaAct;
     int ProxColumna = (columnaAct == columnas - 1) ? 0 : columnaAct + 1;
 
     //solo juagamo con 0
     if (sudoku[filaAct][columnaAct] != 0) {
-        return resolverSudokuSinFor(sudoku, ProxFila, ProxColumna, valorMaximo);
+        return resolverSudoku(sudoku, ProxFila, ProxColumna, valorMaximo);
     }
 
    for (int numEnJuego = 1; numEnJuego <= valorMaximo; ++numEnJuego) {
         if (numeroValido(filaAct, columnaAct, numEnJuego, sudoku)) {//puedo hacer mov ?
             sudoku[filaAct][columnaAct] = numEnJuego; //hago mov
-            if (resolverSudokuSinFor(sudoku, ProxFila, ProxColumna, valorMaximo)) {
+            if (resolverSudoku(sudoku, ProxFila, ProxColumna, valorMaximo)) {
                 return true;
             }
             sudoku[filaAct][columnaAct] = 0; // deshago mov
@@ -116,7 +114,7 @@ class SudokuBac  {
                             if(resolverSudoku(sudoku, filas, columnas, valorMaximo)) {
                                 return true; 
                             } 
-                            sudoku[fila][columna] = 0; //desago movimiento
+                            sudoku[fila][columna] = 0; // deshago mov
                         }
                     }
                     return false;
@@ -129,7 +127,7 @@ class SudokuBac  {
 
        void imprimoResuleto(){
         int indexMaximo= max(filas, columnas);
-        resolverSudokuSinFor(sudoku, 0, 0, indexMaximo);
+        resolverSudoku(sudoku, 0, 0, indexMaximo);
         for(int i = 0; i < filas; ++i) {
          
             for (int j = 0; j < columnas; ++j) {
